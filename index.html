@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        // Import jQuery
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!--#region Basic styling -->
+        <style>
+            /* Attempting to emulate the Ableton Push 2 style */
+
+            body {background-color: black;}
+
+            table {
+                width: 40vw;
+                height: 95vh;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+                margin-top: 2vh;
+                border-spacing: 8px;
+            }
+
+            td {
+                color: black;
+                padding: 2px;
+                vertical-align: middle;
+                background-color: rgb(119, 116, 116);
+                background-image: radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116));
+            }
+
+            /* tr:nth-child(3n) td {
+                border-bottom-color: blue;
+                border-bottom-width: 4px;
+            } */
+
+            .pressed {
+                background-color: none;
+            }
+
+            /* Message */
+            #mensaje {
+                font-size: 25px;
+                color: white;
+                margin-left: 15px;
+                margin-top: 20vh;
+                margin-right: 9vw;
+            }
+
+            /* Slider styling */
+            div.slide-container {
+                margin-top: 5vh;
+                left: 0;
+                position: relative;
+            }
+            #volume-control {
+                left: 2vw;
+                position: absolute;
+            }
+            .slide-container label {
+                left: 5vw;
+                color: white;
+                margin-top: 1vh;
+                position: absolute;
+            }
+
+            /* Buttons for automatization functions */
+            .automatization {
+                width: 100%;
+                height: 5.5%;
+                border: none;
+                color: black;
+                margin-top: 4vh;
+                background-color: rgb(112, 201, 237);
+                background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
+                border-radius: 20px;
+            }
+
+        </style>
+        <!--#endregion-->
+    </head>
+    <body>
+        <!--#region notes -->
+
+        <div style="display: inline-flex;">
+            <div class="slide-container">
+                <input type="range" min="0" max="1" value="0.5" step="0.1" name="volume" id="volume-control">
+                <br><label for="volume">Volume</label>
+            </div>
+            
+            <p id="mensaje">
+                Desktop only <br>
+                intended website.
+                <br><br>
+                To play notes,
+                <br>
+                use the keys from 
+                <br>
+                | to < ,
+                <br>
+                1 to 9 , 
+                <br>
+                Q to O ,
+                <br>
+                A to L ,
+                <br>
+                Z to . ,
+                <br>
+                and 0 to - .
+                <br><br>
+                
+                <button class="automatization" onclick="restart_recording()">Restart recording</button>
+                <br>
+                <button class="automatization" onclick=" get_times_and_notes()">Get times and notes</button>
+            </p>
+            
+            <table>
+                <tr>
+                    <td data-posicion=40>Ab</td>
+                    <td data-posicion=41>A</td>
+                    <td data-posicion=42>Bb</td>
+                    <td data-posicion=43>B</td>
+                </tr>
+                <tr>
+                    <td data-posicion=36>E</td>
+                    <td data-posicion=37>F</td>
+                    <td data-posicion=38>Gb</td>
+                    <td data-posicion=39>G</td>
+                </tr>
+
+
+                <tr>
+                    <td data-posicion=32>C</td>
+                    <td data-posicion=33>Db</td>
+                    <td data-posicion=34>D</td>
+                    <td data-posicion=35>Eb</td>
+                </tr>
+                <tr>
+                    <td data-posicion=28>Ab</td>
+                    <td data-posicion=29>A</td>
+                    <td data-posicion=30>Bb</td>
+                    <td data-posicion=31>B</td>
+                </tr>
+                <tr>
+                    <td data-posicion=24>E</td>
+                    <td data-posicion=25>F</td>
+                    <td data-posicion=26>Gb</td>
+                    <td data-posicion=27>G</td>
+                </tr>
+
+
+                <tr>
+                    <td data-posicion=20>C</td>
+                    <td data-posicion=21>Db</td>
+                    <td data-posicion=22>D</td>
+                    <td data-posicion=23>Eb</td>
+                </tr>
+                <tr>
+                    <td data-posicion=16>Ab</td>
+                    <td data-posicion=17>A</td>
+                    <td data-posicion=18>Bb</td>
+                    <td data-posicion=19>B</td>
+                </tr>
+                <tr>
+                    <td data-posicion=12>E</td>
+                    <td data-posicion=13>F</td>
+                    <td data-posicion=14>Gb</td>
+                    <td data-posicion=15>G</td>
+                </tr>
+
+               
+                <tr>
+                    <td data-posicion=8>C</td>
+                    <td data-posicion=9>Db</td>
+                    <td data-posicion=10>D</td>
+                    <td data-posicion=11>Eb</td>
+                </tr>
+                <tr>
+                    <td data-posicion=4>Ab</td>
+                    <td data-posicion=5>A</td>
+                    <td data-posicion=6>Bb</td>
+                    <td data-posicion=7>B</td>
+                </tr>
+                <tr>
+                    <td data-posicion=0>E</td>
+                    <td data-posicion=1>F</td>
+                    <td data-posicion=2>Gb</td>
+                    <td data-posicion=3>G</td>
+                </tr>
+            </table>
+        </div>
+
+        <!--#endregion-->
+        
+        <!--#region audios -->
+        <audio class="notes" preload="auto"><source src="notas/E3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/F3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Gb3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/G3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Ab3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/A3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Bb3.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/B3.mp3"></source></audio>
+
+        <audio class="notes" preload="auto"><source src="notas/C4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Db4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/D4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Eb4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/E4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/F4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Gb4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/G4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Ab4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/A4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Bb4.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/B4.mp3"></source></audio>
+
+        <audio class="notes" preload="auto"><source src="notas/C5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Db5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/D5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Eb5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/E5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/F5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Gb5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/G5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Ab5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/A5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Bb5.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/B5.mp3"></source></audio>
+
+        <audio class="notes" preload="auto"><source src="notas/C6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Db6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/D6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Eb6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/E6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/F6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Gb6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/G6.mp3"></source></audio> 
+        <audio class="notes" preload="auto"><source src="notas/Ab6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/A6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/Bb6.mp3"></source></audio>
+        <audio class="notes" preload="auto"><source src="notas/B6.mp3"></source></audio>
+        <!--#endregion-->
+
+        <!--#region Script for sound, effects and automatization -->
+        <script>
+            let audio;
+            let tabla = document.querySelector('table')
+            let notes = Array.prototype.slice.call(document.querySelectorAll('td'))
+            let audios = Array.prototype.slice.call(document.querySelectorAll('audio'))
+            let chromatic_key_values = {"|":0,"Tab":1,"CapsLock":2,"<":3,"1":4,"q":5,"a":6,"z":7,"2":8,"w":9,"s":10,"x":11,"3":12,"e":13,"d":14,"c":15,"4":16,"r":17,"f":18,"v":19,"5":20,"t":21,"g":22,"b":23,"6":24,"y":25,"h":26,"n":27,"7":28,"u":29,"j":30,"m":31,"8":32,"i":33,"k":34,",":35,"9":36,"o":37,"l":38,".":39,"0":40,"p":41,"ñ":42,"-":43}
+            // key.code dictionary: {"Backquote":0,"Tab":1,"CapsLock":2,"IntlBackslash":3,"Digit1":4,"KeyQ":5,"KeyA":6,"KeyZ":7,"Digit2":8,"KeyW":9,"KeyS":10,"KeyX":11,"Digit3":12,"KeyE":13,"KeyD":14,"KeyC":15,"Digit4":16,"KeyR":17,"KeyF":18,"KeyV":19,"Digit5":20,"KeyT":21,"KeyG":22,"KeyB":23,"Digit6":24,"KeyY":25,"KeyH":26,"KeyN":27,"Digit7":28,"KeyU":29,"KeyJ":30,"KeyM":31,"Digit8":32,"KeyI":33,"KeyK":34,"Comma":35,"Digit9":36,"KeyO":37,"KeyL":38,"Period":39,"Digit0":40,"KeyP":41,"Semicolon":42,"Slash":43}
+            // key.keyCode dictionary (deprecated):  {220:0,9:1,20:2,226:3,49:4,81:5,65:6,90:7,50:8,87:9,83:10,88:11,51:12,69:13,68:14,67:15,52:16,82:17,70:18,86:19,53:20,84:21,71:22,66:23,54:24,89:25,72:26,78:27,55:28,85:29,74:30,77:31,56:32,73:33,75:34,188:35,57:36,79:37,76:38,190:39,48:40,80:41,192:42,189:43}
+            let key_values = Object.keys(chromatic_key_values)
+            // (Object.keys(chromatic_key_values)).map(e => parseInt(e)) // The keys were passed as strings, so we turned them to integers
+
+            let pressed = Array(key_values.length).fill(0);
+
+            // Sort notes based on their posicion property
+            function sortByPitch( a, b ) {
+                a = parseInt(a.dataset.posicion)
+                b = parseInt(b.dataset.posicion)
+                if ( a > b ) return 1 ;
+                if ( a < b ) return -1 ;
+                return 0 ;
+            }
+            notes = notes.sort(sortByPitch);
+
+            // Lower volume of audio files
+            audios.forEach(e => e.volume = 0.5);
+            
+            // // Play sound and change color after touchstart
+            // notes.forEach( nota => nota.addEventListener('touchstart', () => {
+            //     audio = audios[nota.dataset.posicion];
+            //     audio.currentTime = 0;
+            //     audio.play();
+            //     nota.classList.add('pressed'); 
+            // }));
+
+            // Play sound after appropriate key press and change color
+            document.querySelector('body').addEventListener('keydown', function(e) {
+                tempo = String(e.key)
+                if(key_values.includes(tempo)) {
+                    if (e.repeat) { return } 
+
+                    audio = audios[chromatic_key_values[tempo]];
+                    audio.currentTime = 0; audio.play();
+                    notes[chromatic_key_values[tempo]].style.background = "white"; 
+                }
+            });
+
+            ////// Reset color
+            //// For mobile:
+            // notes.forEach(nota => nota.addEventListener('touchend' , () => { nota.classList.remove('pressed'); })); 
+
+            // For desktop:
+            document.querySelector('body').addEventListener('keyup', function(e) {
+                tempo = String(e.key)                
+                if(key_values.includes(tempo)) {
+                    notes[chromatic_key_values[tempo]].style.backgroundColor = "rgb(119, 116, 116)";
+                    notes[chromatic_key_values[tempo]].style.backgroundImage = "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
+                } 
+            });
+
+            // Change volume of notes
+            let volume_control = document.querySelector('#volume-control')
+            volume_control.addEventListener('mouseup', function(event){
+                audios.forEach(e => e.volume = volume_control.value)
+            });
+
+            // Functions for automatization with Python
+            let t_0; // initial arbitrary time
+            let tracking = {}; // dictionary for times and notes
+            let teclas, tiempos, posiciones_played, notes_played;
+
+            function restart_recording() {
+                t_0 = Date.now(); 
+                tracking = {}
+                $('body')[0].addEventListener('keydown', event => tracking[Date.now()-t_0] = event.key);
+                alert('Recording!!!')
+            }
+
+            function get_times_and_notes() {
+                alert('go crazy!');
+                
+                // tiempos variable for Python
+                tiempos = Object.keys(tracking).map(e => parseInt(e));
+                console.log(JSON.stringify(tiempos));
+
+                // teclas variable for Python
+                teclas = Object.values(tracking);
+                console.log(JSON.stringify(teclas));
+                
+                // Note positions played during recording
+                posiciones_played = [];
+                teclas.forEach(tecla => posiciones_played.push(chromatic_key_values[tecla]));
+                console.log(JSON.stringify(posiciones_played));
+                
+                // Actual note classes played during recording
+                notes_played = [];
+                posiciones_played.forEach(nota => notes_played.push(notes.slice(0,12).filter( e => parseInt(e.dataset.posicion) === nota%12)[0].innerHTML));
+                console.log(JSON.stringify(notes_played));
+
+            }
+        </script>
+        <!--#endregion-->
+    </body>
+</html>
