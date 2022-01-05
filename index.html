@@ -427,7 +427,7 @@
                 
                 // Note positions played during recording
                 posiciones_played = [];
-                teclas.forEach(tecla => posiciones_played.push(chromatic_key_values[tecla]));
+                teclas.forEach(tecla => posiciones_played.push(chromatic_key_values[tecla][0]));
                 console.log(JSON.stringify(posiciones_played));
                 
                 // Actual note classes played during recording
