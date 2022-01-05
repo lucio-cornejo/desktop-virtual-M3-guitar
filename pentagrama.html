@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite pentagram</title>
+    <style>
+        body {
+            overflow: auto;
+            background: black;
+        }
+        .pentagram {
+            width: 100vw;
+            margin-top: 20vh;
+            position: relative;
+        }
+        .linea-real-pentagrama {
+            border: .3vh solid white;
+            border-bottom: none;
+            margin-bottom: 3vh;
+            z-index: -1;
+        }
+        .linea-imaginaria-pentagrama {
+            border: .3vh dashed white;
+            border-bottom: none;
+            margin-bottom: 3vh;
+            z-index: -1;
+        }
+        .spacing {
+            margin-bottom: 1.5vh;
+            z-index: -1;
+        }
+
+        .note {
+            width: 2vh;
+            height: 2vh;
+            z-index: 100;
+            left: 5%;
+            bottom: -1.5%;  
+            /* some vh values:  -3  -0.7  0.85  2.4  4.1  5.8  7.45  9.1  */
+            /* some % values: -4.5  -1.4     */
+            position: absolute;
+            border-radius: 100%;
+            background-color: rgb(112, 201, 237);
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div class="pentagram">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+
+        <p class="spacing"> &nbsp; </p>
+        
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+
+        <p class="spacing"> &nbsp; </p>
+
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+
+        <div class="note"></div>
+
+
+    </div>
+</body>
+</html>
