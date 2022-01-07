@@ -2,7 +2,7 @@ let audio;
 let tabla = document.querySelector("table");
 let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
 let audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
-let chromatic_key_values = {
+let chromaticKeyValues = {
   "|": [0, "72.8%", "natural-note"],
   Tab: [1, "70.2%", "natural-note"],
   CapsLock: [2, "67.73%", "flat-note"],
@@ -51,13 +51,13 @@ let chromatic_key_values = {
 // key.code dictionary: {"Backquote":0,"Tab":1,"CapsLock":2,"IntlBackslash":3,"Digit1":4,"KeyQ":5,"KeyA":6,"KeyZ":7,"Digit2":8,"KeyW":9,"KeyS":10,"KeyX":11,"Digit3":12,"KeyE":13,"KeyD":14,"KeyC":15,"Digit4":16,"KeyR":17,"KeyF":18,"KeyV":19,"Digit5":20,"KeyT":21,"KeyG":22,"KeyB":23,"Digit6":24,"KeyY":25,"KeyH":26,"KeyN":27,"Digit7":28,"KeyU":29,"KeyJ":30,"KeyM":31,"Digit8":32,"KeyI":33,"KeyK":34,"Comma":35,"Digit9":36,"KeyO":37,"KeyL":38,"Period":39,"Digit0":40,"KeyP":41,"Semicolon":42,"Slash":43}
 // key.keyCode dictionary (deprecated):  {220:0,9:1,20:2,226:3,49:4,81:5,65:6,90:7,50:8,87:9,83:10,88:11,51:12,69:13,68:14,67:15,52:16,82:17,70:18,86:19,53:20,84:21,71:22,66:23,54:24,89:25,72:26,78:27,55:28,85:29,74:30,77:31,56:32,73:33,75:34,188:35,57:36,79:37,76:38,190:39,48:40,80:41,192:42,189:43}
 
-let key_values = Object.keys(chromatic_key_values);
+let keyValues = Object.keys(chromaticKeyValues);
 // (Object.keys(chromatic_key_values)).map(e => parseInt(e)) // The keys were passed as strings, so we turned them to integers
 
-let pressed = Array(key_values.length).fill(0);
+let pressed = Array(keyValues.length).fill(0);
 
 let pentagrama = document.querySelector("#pentagram");
-let notes_pressed_counter = 0;
+let notesPressedCounter = 0;
 
 // Sort notes based on their posicion property
 function sortByPitch(a, b) {
@@ -75,27 +75,27 @@ audios.forEach((e) => (e.volume = 0.5));
 // Play sound after appropriate key press and change color
 document.querySelector("body").addEventListener("keydown", function (e) {
   tempo = String(e.key);
-  if (key_values.includes(tempo)) {
+  if (keyValues.includes(tempo)) {
     if (e.repeat) {
       return;
     }
 
-    audio = audios[chromatic_key_values[tempo][0]];
+    audio = audios[chromaticKeyValues[tempo][0]];
     audio.currentTime = 0;
     audio.play();
-    notes[chromatic_key_values[tempo][0]].style.background = "white";
+    notes[chromaticKeyValues[tempo][0]].style.background = "white";
 
-    if (notes_pressed_counter > 10) {
+    if (notesPressedCounter > 10) {
       document.dispatchEvent(evento);
-      notes_pressed_counter = 0;
+      notesPressedCounter = 0;
     } else {
-      notes_pressed_counter = notes_pressed_counter + 1;
+      notesPressedCounter = notesPressedCounter + 1;
     }
 
     let nota = document.createElement("div");
-    nota.className = chromatic_key_values[tempo][2];
-    nota.style.top = chromatic_key_values[tempo][1];
-    nota.style.left = String(8.75 * notes_pressed_counter) + "%";
+    nota.className = chromaticKeyValues[tempo][2];
+    nota.style.top = chromaticKeyValues[tempo][1];
+    nota.style.left = String(8.75 * notesPressedCounter) + "%";
 
     pentagrama.prepend(nota);
   }
@@ -107,9 +107,9 @@ const evento = new Event("clear_notes");
 document.addEventListener(
   "clear_notes",
   function () {
-    let notes_to_clear = Array.prototype.slice.call(pentagrama.children);
-    notes_to_clear = notes_to_clear.filter((e) => e.tagName === "DIV");
-    notes_to_clear.forEach((e) => e.remove());
+    let notesToClear = Array.prototype.slice.call(pentagrama.children);
+    notesToClear = notesToClear.filter((e) => e.tagName === "DIV");
+    notesToClear.forEach((e) => e.remove());
   },
   false
 );
@@ -117,24 +117,24 @@ document.addEventListener(
 // Reset color
 document.querySelector("body").addEventListener("keyup", function (e) {
   tempo = String(e.key);
-  if (key_values.includes(tempo)) {
-    notes[chromatic_key_values[tempo][0]].style.backgroundColor =
+  if (keyValues.includes(tempo)) {
+    notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
       "rgb(119, 116, 116)";
-    notes[chromatic_key_values[tempo][0]].style.backgroundImage =
+    notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
       "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
   }
 });
 
 // Change volume of notes
-let volume_control = document.querySelector("#volume-control");
-volume_control.addEventListener("mouseup", function (event) {
-  audios.forEach((e) => (e.volume = volume_control.value));
+let volumeControl = document.querySelector("#volume-control");
+volumeControl.addEventListener("mouseup", function (event) {
+  audios.forEach((e) => (e.volume = volumeControl.value));
 });
 
 // Functions for automatization with Python
 let t_0; // initial arbitrary time
 let tracking = {}; // dictionary for times and notes
-let teclas, tiempos, posiciones_played, notes_played;
+let teclas, tiempos, posicionesPlayed, notesPlayed;
 
 function restart_recording() {
   t_0 = Date.now();
@@ -146,7 +146,7 @@ function restart_recording() {
   alert("Recording!!!");
 }
 
-function get_times_and_notes() {
+function getTimesAndNotes() {
   alert("go crazy!");
 
   // tiempos variable for Python
@@ -158,20 +158,20 @@ function get_times_and_notes() {
   console.log(JSON.stringify(teclas));
 
   // Note positions played during recording
-  posiciones_played = [];
+  posicionesPlayed = [];
   teclas.forEach((tecla) =>
-    posiciones_played.push(chromatic_key_values[tecla][0])
+    posicionesPlayed.push(chromaticKeyValues[tecla][0])
   );
-  console.log(JSON.stringify(posiciones_played));
+  console.log(JSON.stringify(posicionesPlayed));
 
   // Actual note classes played during recording
-  notes_played = [];
-  posiciones_played.forEach((nota) =>
-    notes_played.push(
+  notesPlayed = [];
+  posicionesPlayed.forEach((nota) =>
+    notesPlayed.push(
       notes
         .slice(0, 12)
         .filter((e) => parseInt(e.dataset.posicion) === nota % 12)[0].innerHTML
     )
   );
-  console.log(JSON.stringify(notes_played));
+  console.log(JSON.stringify(notesPlayed));
 }
