@@ -72,6 +72,13 @@ notes = notes.sort(sortByPitch);
 // Lower volume of audio files
 audios.forEach((e) => (e.volume = 0.5));
 
+// Function to remove the notes in the musical pentagram
+function clearNotes() {
+  let notesToClear = Array.prototype.slice.call(pentagrama.children);
+  notesToClear = notesToClear.filter((e) => e.tagName === "DIV");
+  notesToClear.forEach((e) => e.remove());
+}
+
 // Play sound after appropriate key press and change color
 document.querySelector("body").addEventListener("keydown", function (e) {
   tempo = String(e.key);
@@ -86,7 +93,7 @@ document.querySelector("body").addEventListener("keydown", function (e) {
     notes[chromaticKeyValues[tempo][0]].style.background = "white";
 
     if (notesPressedCounter > 10) {
-      document.dispatchEvent(evento);
+      clearNotes();
       notesPressedCounter = 0;
     } else {
       notesPressedCounter = notesPressedCounter + 1;
@@ -100,19 +107,6 @@ document.querySelector("body").addEventListener("keydown", function (e) {
     pentagrama.prepend(nota);
   }
 });
-
-// Custom event to clear the notes in the pentagram
-const evento = new Event("clear_notes");
-
-document.addEventListener(
-  "clear_notes",
-  function () {
-    let notesToClear = Array.prototype.slice.call(pentagrama.children);
-    notesToClear = notesToClear.filter((e) => e.tagName === "DIV");
-    notesToClear.forEach((e) => e.remove());
-  },
-  false
-);
 
 // Reset color
 document.querySelector("body").addEventListener("keyup", function (e) {
@@ -174,4 +168,4 @@ function getTimesAndNotes() {
     )
   );
   console.log(JSON.stringify(notesPlayed));
-}
+};
