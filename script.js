@@ -130,7 +130,7 @@ let t_0; // initial arbitrary time
 let tracking = {}; // dictionary for times and notes
 let teclas, tiempos, posicionesPlayed, notesPlayed;
 
-function restart_recording() {
+function restartRecording() {
   t_0 = Date.now();
   tracking = {};
   $("body")[0].addEventListener(
