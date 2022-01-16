@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        // Import jQuery
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        ////////
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 
         <link href = "styles.css" rel="stylesheet">
         <script src="script.js" defer></script>
@@ -118,7 +118,7 @@
 
         <!-- Musical pentagram -->
             <div id="pentagram">
-                <p style="margin-bottom: -2%; z-index: -1;"> &nbsp; </p>
+                <p style="margin-bottom: -4.5%; z-index: -1;"> &nbsp; </p>
 
                 <hr class="linea-imaginaria-pentagrama" style="visibility: hidden;">
                 <hr class="linea-imaginaria-pentagrama">
@@ -195,5 +195,58 @@
         <audio class="notes" preload="auto"><source src="notas/Bb6.mp3"></source></audio>
         <audio class="notes" preload="auto"><source src="notas/B6.mp3"></source></audio>
         <!--#endregion-->
+    
+    <script>
+    
+    //// Working notes positions when there was no scrollable pentagram functionality
+    //
+    //   const chromaticKeyValues = {
+    //                              "|": [0, "72.8%", "natural-note"],
+    //                              Tab: [1, "70.2%", "natural-note"],
+    //                              CapsLock: [2, "67.73%", "flat-note"],
+    //                              "<": [3, "67.73%", "natural-note"],
+    //                              1: [4, "65%", "flat-note"],
+    //                              q: [5, "65%", "natural-note"],
+    //                              a: [6, "63.2%", "flat-note"],
+    //                              z: [7, "63.2%", "natural-note"],
+    //                              2: [8, "60%", "natural-note"],
+    //                              w: [9, "57.4%", "flat-note"],
+    //                              s: [10, "57.4%", "natural-note"],
+    //                              x: [11, "55.6%", "flat-note"],
+    //                              3: [12, "55.6%", "natural-note"],
+    //                              e: [13, "53%", "natural-note"],
+    //                              d: [14, "50.45%", "flat-note"],
+    //                              c: [15, "50.45%", "natural-note"],
+    //                              4: [16, "48%", "flat-note"],
+    //                              r: [17, "48%", "natural-note"],
+    //                              f: [18, "45.3%", "flat-note"],
+    //                              v: [19, "45.3%", "natural-note"],
+    //                              5: [20, "43%", "natural-note"],
+    //                              t: [21, "40.4%", "flat-note"],
+    //                              g: [22, "40.4%", "natural-note"],
+    //                              b: [23, "37.8%", "flat-note"],
+    //                              6: [24, "37.8%", "natural-note"],
+    //                              y: [25, "35.4%", "natural-note"],
+    //                              h: [26, "33%", "flat-note"],
+    //                              n: [27, "33%", "natural-note"],
+    //                              7: [28, "30.25%", "flat-note"],
+    //                              u: [29, "30.25%", "natural-note"],
+    //                              j: [30, "27.9%", "flat-note"],
+    //                              m: [31, "27.9%", "natural-note"],
+    //                              8: [32, "25.45%", "natural-note"],
+    //                              i: [33, "22.85%", "flat-note"],
+    //                              k: [34, "22.85%", "natural-note"],
+    //                              ",": [35, "20.25%", "flat-note"],
+    //                              9: [36, "20.25%", "natural-note"],
+    //                              o: [37, "17.8%", "natural-note"],
+    //                              l: [38, "15.3%", "flat-note"],
+    //                              ".": [39, "15.3%", "natural-note"],
+    //                              0: [40, "12.7%", "flat-note"],
+    //                              p: [41, "12.7%", "natural-note"],
+    //                              ñ: [42, "10.2%", "flat-note"],
+    //                              "-": [43, "10.2%", "natural-note"],
+    //   };
+    </script>
+    
     </body>
 </html>

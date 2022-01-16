@@ -72,6 +72,7 @@ div.slide-container {
     width: 25vw;
     margin: 12vh 0 0 3vw;
     position: relative;
+    overflow: auto;
 }
 .linea-real-pentagrama {
     border: .3vh solid white;
