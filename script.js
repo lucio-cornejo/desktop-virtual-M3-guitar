@@ -70,7 +70,7 @@ notes = notes.sort(sortByPitch);
 // Lower volume of audio files
 audios.forEach((e) => (e.volume = 0.5));
 
-// // Function to remove the notes in the musical pentagram
+//// Function to remove the notes in the musical pentagram
 // function clearNotes() {
 //   let notesToClear = Array.prototype.slice.call(pentagrama.children);
 //   notesToClear = notesToClear.filter((e) => e.tagName === "DIV");
