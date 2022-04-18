@@ -21,7 +21,14 @@ tiempos = [tiempos[i+1] - tiempos[i] for i in range(len(tiempos)-1) ]
 
 scale_velocity =  1     # 1: regular speed    0.5: double speed
 
-for i in range(len(teclas)) :
-    keyboard.press(teclas[i])
-    time.sleep(tiempos[i]*0.001*scale_velocity)
-    keyboard.release(teclas[i])
+
+teclas = ["a", "4", "g", "6", "8"]
+for tecla in teclas:
+  keyboard.press(tecla)
+  keyboard.release(tecla) 
+
+
+# for i in range(len(teclas)) :
+#     keyboard.press(teclas[i])
+#     time.sleep(tiempos[i]*0.001*scale_velocity)
+#     keyboard.release(teclas[i])

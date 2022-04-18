@@ -2,6 +2,7 @@ let audio;
 const tabla = document.querySelector("table");
 let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
 const audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
+
 const chromaticKeyValues = {
   "|": [0, "72.8%", "natural-note"],        // E
   Tab: [1, "70.2%", "natural-note"],
@@ -50,7 +51,6 @@ const chromaticKeyValues = {
 };
 
 const keyValues = Object.keys(chromaticKeyValues);
-// (Object.keys(chromatic_key_values)).map(e => parseInt(e)) // The keys were passed as strings, so we turned them to integers
 
 let pressed = Array(keyValues.length).fill(0);
 
@@ -79,10 +79,7 @@ audios.forEach((e) => (e.volume = 0.5));
 
 // Lines of pentagram
 const lineas = Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
-// Do not consider the first line, because it exists just for spacing
 lineas.shift();
-// Set initial pentagram lines' width
-lineas.forEach(e => e.style.width = '300px')
 
 // Play sound after appropriate key press and change color
 document.querySelector("body").addEventListener("keydown", function (e) {
@@ -105,32 +102,38 @@ document.querySelector("body").addEventListener("keydown", function (e) {
     nota.style.left = String(9*notesPressedCounter) + "%";
 
     pentagrama.prepend(nota);
+    pentagrama.firstChild.scrollIntoView();
 
     // Increase length of pentragram lines due to overflow
-    lineas.forEach( (linea) => linea.style.width = String(parseInt(linea.style.width.slice(0,-2))+28)+'px')
-    if(notesPressedCounter > 10) {
-      pentagrama.scrollBy(28.182,0);
+    let currentPentagramWidth = String(pentagrama.scrollWidth);
+    lineas.forEach( (linea) => {
+      linea.style.width =  currentPentagramWidth + 'px';
+    })
+  }
+})
+//   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
+
+// Reset note color
+document.querySelector("body").addEventListener(
+  "keyup", 
+  function (e) {
+    tempo = String(e.key);
+    if (keyValues.includes(tempo)) {
+      notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
+        "rgb(119, 116, 116)";
+      notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
+        "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
     }
-
   }
-});
-
-// Reset color
-document.querySelector("body").addEventListener("keyup", function (e) {
-  tempo = String(e.key);
-  if (keyValues.includes(tempo)) {
-    notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
-      "rgb(119, 116, 116)";
-    notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
-      "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
-  }
-});
+)
 
 // Change volume of notes
-let volumeControl = document.querySelector("#volume-control");
-volumeControl.addEventListener("mouseup", function (event) {
-  audios.forEach((e) => (e.volume = volumeControl.value));
-});
+document.querySelector("#volume-control").addEventListener(
+  "change",
+  function (event) {
+    audios.forEach((e) => (e.volume = event.target.value));
+  }
+)
 
 // Functions for automatization with Python
 let t_0; // initial arbitrary time
@@ -143,13 +146,11 @@ function restartRecording() {
   $("body")[0].addEventListener(
     "keydown",
     (event) => (tracking[Date.now() - t_0] = event.key)
-  );
+  )
   alert("Recording!!!");
 }
 
 function getTimesAndNotes() {
-  alert("go crazy!");
-
   // tiempos variable for Python
   tiempos = Object.keys(tracking).map((e) => parseInt(e));
   console.log(JSON.stringify(tiempos));
@@ -176,3 +177,26 @@ function getTimesAndNotes() {
   );
   console.log(JSON.stringify(notesPlayed));
 };
+
+async function playRecording() {
+  // Get times between notes
+  let jsTeclas = teclas;
+  let jsTimes = tiempos;
+  jsTimes = jsTimes.slice(1).map(function(n, i) { return n - jsTimes[i]; })
+  console.log(jsTimes);
+  
+  // Start note playing simulation
+  for (let i=0; i<jsTeclas.length; i++) {
+    document.body.dispatchEvent(
+      new KeyboardEvent('keydown', {'key':jsTeclas[i]} )
+    )
+    await sleep(jsTimes[i]);
+    document.body.dispatchEvent(
+      new KeyboardEvent('keyup', {'key':jsTeclas[i]} )
+    )
+  }
+}
+
+function sleep(miliseconds) {
+  return new Promise(resolve => setTimeout(resolve, miliseconds));
+}

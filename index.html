@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        ////////
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
-
         <link href = "styles.css" rel="stylesheet">
         <script src="script.js" defer></script>
 
@@ -14,9 +12,11 @@
         <div style="display: inline-flex;">
             <div class="slide-container">
                 <input type="range" min="0" max="1" value="0.5" step="0.1" name="volume" id="volume-control">
-                <br><label for="volume">Volume</label>
-            </div>
-            
+                <br><label for="volume-control">Volume</label>
+              </div>
+              
+            <button onclick = "playRecording()">Play</button>
+
             <p id="mensaje">
                 Desktop only <br>
                 intended website.
@@ -95,7 +95,7 @@
                     <td data-posicion=15>G</td>
                 </tr>
 
-               
+
                 <tr>
                     <td data-posicion=8>C</td>
                     <td data-posicion=9>Db</td>

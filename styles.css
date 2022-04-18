@@ -1,122 +1,125 @@
 /* Attempting to emulate the Ableton Push 2 style */
 
 body {
-    margin: 0;
-    padding: 0;
-    /* overflow: hidden; */
-    background-color: black;
+  margin: 0;
+  padding: 10px 5px 10px 60px;
+  overflow-y: hidden;
+  background-color: black;
 }
 
 table {
-    width: 40vw;
-    height: 95vh;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 2vh;
-    border-spacing: 8px;
+  width: 40vw;
+  height: 95vh;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 2vh;
+  border-spacing: 8px;
 }
 
 td {
-    color: black;
-    padding: 2px;
-    vertical-align: middle;
-    background-color: rgb(119, 116, 116);
-    background-image: radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116));
+  color: black;
+  padding: 2px;
+  vertical-align: middle;
+  background-color: rgb(119, 116, 116);
+  background-image: radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116));
 }
 
 .pressed {
-    background-color: none;
+  background-color: none;
 }
 
 /* Message */
 #mensaje {
-    font-size: 25px;
-    color: white;
-    margin: 20vh 5vw 0 15px;
+  font-size: 25px;
+  color: white;
+  margin: 20vh 5vw 0 15px;
 }
 
 /* Slider styling */
 div.slide-container {
-    margin-top: 5vh;
-    left: 0;
-    position: relative;
+  position: relative;
+  left: 0;
+  margin-top: 5vh;
 }
 #volume-control {
-    left: 2vw;
-    position: absolute;
+  left: 2vw;
+  position: absolute;
 }
 .slide-container label {
-    left: 5vw;
-    color: white;
-    margin-top: 1vh;
-    position: absolute;
+  left: 5vw;
+  color: white;
+  margin-top: 1vh;
+  position: absolute;
 }
 
 /* Buttons for automatization functions */
 .automatization {
-    width: 200px;
-    height: 7%;
-    border: none;
-    color: black;
-    margin-top: 3vh;
-    background-color: rgb(112, 201, 237);
-    background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
-    border-radius: 20px;
+  width: 200px;
+  height: 7%;
+  border: none;
+  color: black;
+  margin-top: 3vh;
+  background-color: rgb(112, 201, 237);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
+  border-radius: 20px;
 }
 
 /* Musical pentagram */
-
 #pentagram {
-    float: right;
-    width: 25vw;
-    margin: 12vh 0 0 3vw;
-    position: relative;
-    overflow: auto;
+  float: right;
+  width: 25vw;
+  margin: 12vh 0 0 3vw;
+  position: relative;
+  overflow-x: scroll;
+}
+
+hr {
+  display: inherit;
 }
 .linea-real-pentagrama {
-    border: .3vh solid white;
-    border-bottom: none;
-    margin-bottom: 4vh;
-    z-index: -1;
+  border: .3vh solid white;
+  border-bottom: none;
+  margin-bottom: 4vh;
+  z-index: -1;
 }
 .linea-imaginaria-pentagrama {
-    border: .3vh dashed rgba(255,0,0,1);
-    border-bottom: none;
-    margin-bottom: 4vh;
-    z-index: -1;
+  border: .3vh dashed rgba(255,0,0,1);
+  border-bottom: none;
+  margin-bottom: 4vh;
+  z-index: -1;
 }
 .spacing {
-    margin-bottom: 1%;
-    z-index: -1;
+  margin-bottom: 1%;
+  z-index: -1;
 }
 
 /* Symbols for notes in sheet */
 .natural-note {
-    width: 2vh;
-    height: 2vh;
-    z-index: 1;
-    left: 5%;
-    top: 10.2%;  /* 33.75 => 28.25 */
-    position: absolute;
-    border-radius: 100%;
-    background-color: rgb(112, 201, 237);
+  width: 2vh;
+  height: 2vh;
+  z-index: 1;
+  left: 5%;
+  top: 10.2%;  /* 33.75 => 28.25 */
+  position: absolute;
+  border-radius: 100%;
+  background-color: rgb(112, 201, 237);
 }
 .flat-note {
-    width: 2vh;
-    height: 2vh;
-    z-index: 1;
-    left: 5%;
-    top: -20%; /* hide note */
-    position: absolute;
-    border-radius: 100%;
-    background-color: rgb(112, 201, 237);
+  width: 2vh;
+  height: 2vh;
+  z-index: 1;
+  left: 5%;
+  top: -20%; /* hide note */
+  position: absolute;
+  border-radius: 100%;
+  background-color: rgb(112, 201, 237);
 }
 .flat-note::before {
-    content: "♭";
-    font-size: 25px;
-    margin-left: -13px;
-    position: absolute;
-    margin-top: -15px;
-    color: rgb(112, 201, 237);
+  content: "♭";
+  font-size: 25px;
+  margin-left: -13px;
+  position: absolute;
+  margin-top: -15px;
+  color: rgb(112, 201, 237);
 }
