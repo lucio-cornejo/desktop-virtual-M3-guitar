@@ -74,9 +74,6 @@ div.slide-container {
   overflow-x: scroll;
 }
 
-hr {
-  display: inherit;
-}
 .linea-real-pentagrama {
   border: .3vh solid white;
   border-bottom: none;

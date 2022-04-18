@@ -8,15 +8,12 @@
     </head>
     <body>
         <!--#region menu and notes -->
-
         <div style="display: inline-flex;">
             <div class="slide-container">
                 <input type="range" min="0" max="1" value="0.5" step="0.1" name="volume" id="volume-control">
                 <br><label for="volume-control">Volume</label>
               </div>
               
-            <button onclick = "playRecording()">Play</button>
-
             <p id="mensaje">
                 Desktop only <br>
                 intended website.
@@ -34,11 +31,16 @@
                 and 
                 <br>
                 < to - .
-                <br><br>
+                <br>
                 
                 <button class="automatization" onclick="restartRecording()">Restart recording</button>
-                <br><br>
+                <br>
                 <button class="automatization" onclick=" getTimesAndNotes()">Get times and notes</button>
+                <br>
+                <button class="automatization" onclick = "playRecording()">Play</button>
+                <br>
+                <button class="automatization" onclick = "resetPentagram()">Clear pentagram</button>
+
             </p>
             
             <table>

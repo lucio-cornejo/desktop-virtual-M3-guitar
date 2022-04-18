@@ -55,6 +55,7 @@ const keyValues = Object.keys(chromaticKeyValues);
 let pressed = Array(keyValues.length).fill(0);
 
 const pentagrama = document.querySelector("#pentagram");
+const backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
 let notesPressedCounter = 0;
 
 // Sort notes based on their posicion property
@@ -70,16 +71,21 @@ notes = notes.sort(sortByPitch);
 // Lower volume of audio files
 audios.forEach((e) => (e.volume = 0.5));
 
-//// Function to remove the notes in the musical pentagram
-// function clearNotes() {
-//   let notesToClear = Array.prototype.slice.call(pentagrama.children);
-//   notesToClear = notesToClear.filter((e) => e.tagName === "DIV");
-//   notesToClear.forEach((e) => e.remove());
-// }
+// Function to reset the musical pentagram
+function resetPentagram() {
+  Array.prototype.slice.call(pentagrama.children).forEach((e) => e.remove());
+  pentagrama.style.width = "25vw";
+  backupPentagram.forEach((e) => pentagrama.appendChild(e));
+  notesPressedCounter = 0;
+}
 
 // Lines of pentagram
-const lineas = Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
-lineas.shift();
+// let lineas = Array.prototype.slice.call(
+//   document.querySelectorAll('hr[class*="linea"]')
+//   )
+// Remove hidden line (hr)
+// lineas.shift();
+
 
 // Play sound after appropriate key press and change color
 document.querySelector("body").addEventListener("keydown", function (e) {
@@ -99,19 +105,24 @@ document.querySelector("body").addEventListener("keydown", function (e) {
     let nota = document.createElement("div");
     nota.className = chromaticKeyValues[tempo][2];
     nota.style.top = chromaticKeyValues[tempo][1];
-    nota.style.left = String(9*notesPressedCounter) + "%";
+    nota.style.left = String(9.5 * notesPressedCounter) + "%";
 
     pentagrama.prepend(nota);
     pentagrama.firstChild.scrollIntoView();
 
     // Increase length of pentragram lines due to overflow
     let currentPentagramWidth = String(pentagrama.scrollWidth);
-    lineas.forEach( (linea) => {
+    let potentialNewLines = 
+      Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
+    // Remove hidden line
+    potentialNewLines.shift();
+    
+    potentialNewLines.forEach( (linea) => {
       linea.style.width =  currentPentagramWidth + 'px';
+      //   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
     })
   }
 })
-//   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
 
 // Reset note color
 document.querySelector("body").addEventListener(
