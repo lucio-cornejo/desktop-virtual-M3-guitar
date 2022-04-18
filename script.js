@@ -79,13 +79,9 @@ function resetPentagram() {
   notesPressedCounter = 0;
 }
 
-// Lines of pentagram
-// let lineas = Array.prototype.slice.call(
-//   document.querySelectorAll('hr[class*="linea"]')
-//   )
-// Remove hidden line (hr)
-// lineas.shift();
-
+// Timing of notes pressed
+initialKeypressTime = Date.now();
+keypressTimes = [0];
 
 // Play sound after appropriate key press and change color
 document.querySelector("body").addEventListener("keydown", function (e) {
@@ -100,12 +96,17 @@ document.querySelector("body").addEventListener("keydown", function (e) {
     audio.play();
     notes[chromaticKeyValues[tempo][0]].style.background = "white";
 
-    notesPressedCounter = notesPressedCounter + 1;
-    
+    keypressTimes.push(Date.now() - initialKeypressTime);
+
+    if (keypressTimes.at(-1) - keypressTimes.at(-2) > 100) {
+      notesPressedCounter += 1;
+    }
+
     let nota = document.createElement("div");
     nota.className = chromaticKeyValues[tempo][2];
     nota.style.top = chromaticKeyValues[tempo][1];
-    nota.style.left = String(9.5 * notesPressedCounter) + "%";
+    // Set horizontal distance between consecutive (non simultaneous) notes
+    nota.style.left = String(12 * notesPressedCounter) + "%"; 
 
     pentagrama.prepend(nota);
     pentagrama.firstChild.scrollIntoView();
