@@ -56,7 +56,7 @@ let pressed = Array(keyValues.length).fill(0);
 
 const pentagrama = document.querySelector("#pentagram");
 let backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
-let notesPressedCounter = 0;
+let noteShiftCounter = 0;
 
 // Sort notes based on their posicion property
 function sortByPitch(a, b) {
@@ -76,7 +76,7 @@ function resetPentagram() {
   Array.prototype.slice.call(pentagrama.children).forEach((e) => e.remove());
   pentagrama.style.width = "25vw";
   backupPentagram.forEach((e) => pentagrama.appendChild(e));
-  notesPressedCounter = 0;
+  noteShiftCounter = 0;
   // Reset copy
   backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
 }
@@ -109,14 +109,14 @@ document.body.addEventListener(
         keypressTimes.push(Date.now() - initialKeypressTime);
         
         if (keypressTimes.at(-1) - keypressTimes.at(-2) > 100) {
-          notesPressedCounter += 1;
+          noteShiftCounter += 1;
         }
         
         let nota = document.createElement("div");
         nota.className = chromaticKeyValues[tempo][2];
         nota.style.top = chromaticKeyValues[tempo][1];
         // Set horizontal distance between consecutive (non simultaneous) notes
-        nota.style.left = String(12 * notesPressedCounter) + "%"; 
+        nota.style.left = String(12 * noteShiftCounter) + "%"; 
 
         pentagrama.prepend(nota);
         pentagrama.firstChild.scrollIntoView();
@@ -137,8 +137,6 @@ document.body.addEventListener(
   }
 )
 
-
-// Reset note color
 document.body.addEventListener(
   "keyup", 
   function (e) {
@@ -146,7 +144,8 @@ document.body.addEventListener(
     if (keyValues.includes(tempo)) {
       // Reset key pressed's trigger
       keydownTriggered[e.key] = false;
-
+      
+      // Reset note color
       notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
         "rgb(119, 116, 116)";
       notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
@@ -171,9 +170,12 @@ let teclas, tiempos, posicionesPlayed, notesPlayed;
 function restartRecording() {
   t_0 = Date.now();
   tracking = {};
-  $("body")[0].addEventListener(
+  document.body.addEventListener(
     "keydown",
-    (event) => (tracking[Date.now() - t_0] = event.key)
+    (event) => {
+      if (event.repeat) { return; }
+      tracking[Date.now() - t_0] = event.key
+    }
   )
   alert("Recording!!!");
 }
@@ -211,6 +213,9 @@ async function playRecording() {
   let jsTeclas = teclas;
   let jsTimes = tiempos;
   jsTimes = jsTimes.slice(1).map(function(n, i) { return n - jsTimes[i]; })
+
+  // Add arbitrary final end time to last note played
+  jsTimes.push(1500);
   console.log(jsTimes);
   
   // Start note playing simulation
