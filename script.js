@@ -55,7 +55,7 @@ const keyValues = Object.keys(chromaticKeyValues);
 let pressed = Array(keyValues.length).fill(0);
 
 const pentagrama = document.querySelector("#pentagram");
-const backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
+let backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
 let notesPressedCounter = 0;
 
 // Sort notes based on their posicion property
@@ -77,60 +77,76 @@ function resetPentagram() {
   pentagrama.style.width = "25vw";
   backupPentagram.forEach((e) => pentagrama.appendChild(e));
   notesPressedCounter = 0;
+  // Reset copy
+  backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
 }
 
 // Timing of notes pressed
 initialKeypressTime = Date.now();
 keypressTimes = [0];
 
+// Variable for avoiding keydown trigger after keyup is triggered
+let keydownTriggered = {};
+
 // Play sound after appropriate key press and change color
-document.querySelector("body").addEventListener("keydown", function (e) {
-  tempo = String(e.key);
-  if (keyValues.includes(tempo)) {
-    if (e.repeat) {
-      return;
+document.body.addEventListener(
+  "keydown",
+  function (e) {
+    tempo = String(e.key);
+    if (keyValues.includes(tempo)) {
+      
+      if (e.repeat) { return; }
+      
+      if (!keydownTriggered[e.key]) {
+        // Set key pressed as trigerred
+        keydownTriggered[e.key] = true;
+        
+        audio = audios[chromaticKeyValues[tempo][0]];
+        audio.currentTime = 0;
+        audio.play();
+        notes[chromaticKeyValues[tempo][0]].style.background = "white";
+        
+        keypressTimes.push(Date.now() - initialKeypressTime);
+        
+        if (keypressTimes.at(-1) - keypressTimes.at(-2) > 100) {
+          notesPressedCounter += 1;
+        }
+        
+        let nota = document.createElement("div");
+        nota.className = chromaticKeyValues[tempo][2];
+        nota.style.top = chromaticKeyValues[tempo][1];
+        // Set horizontal distance between consecutive (non simultaneous) notes
+        nota.style.left = String(12 * notesPressedCounter) + "%"; 
+
+        pentagrama.prepend(nota);
+        pentagrama.firstChild.scrollIntoView();
+        
+        // Increase length of pentragram lines due to overflow
+        let currentPentagramWidth = String(pentagrama.scrollWidth);
+        let potentialNewLines = 
+        Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
+        // Remove hidden line
+        potentialNewLines.shift();
+        
+        potentialNewLines.forEach( (linea) => {
+          linea.style.width =  currentPentagramWidth + 'px';
+          //   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
+        })
+      }
     }
-
-    audio = audios[chromaticKeyValues[tempo][0]];
-    audio.currentTime = 0;
-    audio.play();
-    notes[chromaticKeyValues[tempo][0]].style.background = "white";
-
-    keypressTimes.push(Date.now() - initialKeypressTime);
-
-    if (keypressTimes.at(-1) - keypressTimes.at(-2) > 100) {
-      notesPressedCounter += 1;
-    }
-
-    let nota = document.createElement("div");
-    nota.className = chromaticKeyValues[tempo][2];
-    nota.style.top = chromaticKeyValues[tempo][1];
-    // Set horizontal distance between consecutive (non simultaneous) notes
-    nota.style.left = String(12 * notesPressedCounter) + "%"; 
-
-    pentagrama.prepend(nota);
-    pentagrama.firstChild.scrollIntoView();
-
-    // Increase length of pentragram lines due to overflow
-    let currentPentagramWidth = String(pentagrama.scrollWidth);
-    let potentialNewLines = 
-      Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
-    // Remove hidden line
-    potentialNewLines.shift();
-    
-    potentialNewLines.forEach( (linea) => {
-      linea.style.width =  currentPentagramWidth + 'px';
-      //   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
-    })
   }
-})
+)
+
 
 // Reset note color
-document.querySelector("body").addEventListener(
+document.body.addEventListener(
   "keyup", 
   function (e) {
     tempo = String(e.key);
     if (keyValues.includes(tempo)) {
+      // Reset key pressed's trigger
+      keydownTriggered[e.key] = false;
+
       notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
         "rgb(119, 116, 116)";
       notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
@@ -147,7 +163,7 @@ document.querySelector("#volume-control").addEventListener(
   }
 )
 
-// Functions for automatization with Python
+// Functions for automatization with Python or JavaScript
 let t_0; // initial arbitrary time
 let tracking = {}; // dictionary for times and notes
 let teclas, tiempos, posicionesPlayed, notesPlayed;
