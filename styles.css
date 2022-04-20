@@ -33,7 +33,12 @@ td {
 #mensaje {
   font-size: 25px;
   color: white;
-  margin: 20vh 5vw 0 15px;
+  margin: 15vh 3.5vw 0 15px;
+}
+/* Link to Github repository */
+#mensaje a {
+  color: blue;
+  font-size: 1rem;
 }
 
 /* Slider styling */
@@ -54,6 +59,10 @@ div.slide-container {
 }
 
 /* Buttons for automatization functions */
+button:active {
+  color: white;
+  background-color: rgba(222, 0, 0, 0.75);
+}
 .automatization {
   width: 200px;
   height: 7%;
