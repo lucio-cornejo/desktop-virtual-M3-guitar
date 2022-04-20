@@ -177,7 +177,6 @@ function restartRecording() {
       tracking[Date.now() - t_0] = event.key
     }
   )
-  alert("Recording!!!");
 }
 
 function getTimesAndNotes() {
