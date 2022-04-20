@@ -4,50 +4,50 @@ let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
 const audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
 
 const chromaticKeyValues = {
-  "|": [0, "72.8%", "natural-note"],        // E
-  Tab: [1, "70.2%", "natural-note"],
-  CapsLock: [2, "67.73%", "flat-note"],
-  "<": [3, "67.73%", "natural-note"],
-  1: [4, "65%", "flat-note"],
-  q: [5, "65%", "natural-note"],
-  a: [6, "63%", "flat-note"],
-  z: [7, "62.5%", "natural-note"],          // B
-  2: [8, "60%", "natural-note"],            // C
-  w: [9, "57.4%", "flat-note"],
-  s: [10, "57.4%", "natural-note"],
+  "|": [0, "73.75%", "natural-note"],        // E
+  Tab: [1, "71%", "natural-note"],
+  CapsLock: [2, "68.5%", "flat-note"],
+  "<": [3, "68.5%", "natural-note"],
+  1: [4, "65.75%", "flat-note"],
+  q: [5, "65.75%", "natural-note"],
+  a: [6, "64%", "flat-note"],
+  z: [7, "64%", "natural-note"],          // B
+  2: [8, "61%", "natural-note"],            // C
+  w: [9, "58%", "flat-note"],
+  s: [10, "58%", "natural-note"],
   x: [11, "55.6%", "flat-note"],
   3: [12, "55.6%", "natural-note"],
-  e: [13, "53%", "natural-note"],
+  e: [13, "53.4%", "natural-note"],
   d: [14, "50.45%", "flat-note"],
-  c: [15, "50.45%", "natural-note"],
+  c: [15, "50.45%", "natural-note"],       // G4
   4: [16, "48%", "flat-note"],
   r: [17, "48%", "natural-note"],
   f: [18, "45.3%", "flat-note"],
   v: [19, "45.3%", "natural-note"],         // B
-  5: [20, "43%", "natural-note"],           // C
+  5: [20, "43%", "natural-note"],           // C  
   t: [21, "40.4%", "flat-note"],
   g: [22, "40.4%", "natural-note"],
   b: [23, "37.8%", "flat-note"],
   6: [24, "37.8%", "natural-note"],
-  y: [25, "35.4%", "natural-note"],
-  h: [26, "33%", "flat-note"],
-  n: [27, "33%", "natural-note"],
-  7: [28, "30.25%", "flat-note"],
-  u: [29, "30.25%", "natural-note"],
-  j: [30, "27.9%", "flat-note"],
-  m: [31, "27.9%", "natural-note"],          // B
-  8: [32, "25.45%", "natural-note"],         // C
-  i: [33, "22.85%", "flat-note"],
-  k: [34, "22.85%", "natural-note"],
-  ",": [35, "20.25%", "flat-note"],
-  9: [36, "20.25%", "natural-note"],
-  o: [37, "17.8%", "natural-note"],
-  l: [38, "15.3%", "flat-note"],
-  ".": [39, "15.3%", "natural-note"],
-  0: [40, "12.7%", "flat-note"],
-  p: [41, "12.7%", "natural-note"],
-  ñ: [42, "10.2%", "flat-note"],
-  "-": [43, "10.2%", "natural-note"],
+  y: [25, "35%", "natural-note"],
+  h: [26, "32.5%", "flat-note"],
+  n: [27, "32.5%", "natural-note"],
+  7: [28, "29.75%", "flat-note"],
+  u: [29, "29.75%", "natural-note"],
+  j: [30, "27.5%", "flat-note"],
+  m: [31, "27.5%", "natural-note"],          // B
+  8: [32, "24.5%", "natural-note"],         // C
+  i: [33, "22.25%", "flat-note"],
+  k: [34, "22.25%", "natural-note"],
+  ",": [35, "19.25%", "flat-note"],
+  9: [36, "19.25%", "natural-note"],
+  o: [37, "16.75%", "natural-note"],
+  l: [38, "14%", "flat-note"],
+  ".": [39, "14%", "natural-note"],
+  0: [40, "11.75%", "flat-note"],
+  p: [41, "11.75%", "natural-note"],
+  ñ: [42, "8.75%", "flat-note"],
+  "-": [43, "8.75%", "natural-note"],
 };
 
 const keyValues = Object.keys(chromaticKeyValues);
@@ -100,6 +100,11 @@ document.body.addEventListener(
       if (!keydownTriggered[e.key]) {
         // Set key pressed as trigerred
         keydownTriggered[e.key] = true;
+
+        // Deal with problematic keys
+        if (e.key === "Tab" || e.key === "CapsLock") {
+          e.preventDefault();
+        }
         
         audio = audios[chromaticKeyValues[tempo][0]];
         audio.currentTime = 0;
@@ -146,10 +151,10 @@ document.body.addEventListener(
       keydownTriggered[e.key] = false;
       
       // Reset note color
-      notes[chromaticKeyValues[tempo][0]].style.backgroundColor =
-        "rgb(119, 116, 116)";
-      notes[chromaticKeyValues[tempo][0]].style.backgroundImage =
-        "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
+      notes[chromaticKeyValues[tempo][0]]
+        .style.backgroundColor = "rgb(119, 116, 116)";
+      notes[chromaticKeyValues[tempo][0]]
+        .style.backgroundImage = "radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116))";
     }
   }
 )
