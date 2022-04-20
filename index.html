@@ -1,253 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link href = "styles.css" rel="stylesheet">
-        <script src="script.js" defer></script>
+<head>
+  <link href = "styles.css" rel="stylesheet">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!--#region menu and notes -->
+  <div style="display: inline-flex;">
+    <div class="slide-container">
+      <input type="range" min="0" max="1" value="0.5" step="0.1" name="volume" id="volume-control">
+      <br><label for="volume-control">Volume</label>
+    </div>
 
-    </head>
-    <body>
-        <!--#region menu and notes -->
-        <div style="display: inline-flex;">
-            <div class="slide-container">
-                <input type="range" min="0" max="1" value="0.5" step="0.1" name="volume" id="volume-control">
-                <br><label for="volume-control">Volume</label>
-              </div>
+    <p id="mensaje">
+      <a href="https://github.com/lucio-cornejo/desktop-virtual-M3-guitar">
+        Github repo for local use of app (no lag)
+      </a>
+      <br>
+      Desktop only <br>
+      intended website.
+      <br><br>
+      To play notes,
+      <br>
+      use the keys from 
+      <br>
+      | to 0 ,
+      <br>
+      Tab to P , 
+      <br>
+      CapsLock to Ñ ,
+      <br>
+      and 
+      <br>
+      &lt to - .
+      <br>
+      
+      <button class="automatization" onclick="restartRecording()">Restart recording</button>
+      <br>
+      <button class="automatization" onclick=" getTimesAndNotes()">Get times and notes</button>
+      <br>
+      <button class="automatization" onclick = "playRecording()">Play</button>
+      <br>
+      <button class="automatization" onclick = "resetPentagram()">Clear pentagram</button>
+    </p>
               
-            <p id="mensaje">
-                Desktop only <br>
-                intended website.
-                <br><br>
-                To play notes,
-                <br>
-                use the keys from 
-                <br>
-                | to 0 ,
-                <br>
-                Tab to P , 
-                <br>
-                CapsLock to Ñ ,
-                <br>
-                and 
-                <br>
-                < to - .
-                <br>
-                
-                <button class="automatization" onclick="restartRecording()">Restart recording</button>
-                <br>
-                <button class="automatization" onclick=" getTimesAndNotes()">Get times and notes</button>
-                <br>
-                <button class="automatization" onclick = "playRecording()">Play</button>
-                <br>
-                <button class="automatization" onclick = "resetPentagram()">Clear pentagram</button>
+    <table>
+      <tr>
+        <td data-posicion=40>Ab</td>
+        <td data-posicion=41>A</td>
+        <td data-posicion=42>Bb</td>
+        <td data-posicion=43>B</td>
+      </tr>
+      <tr>
+        <td data-posicion=36>E</td>
+        <td data-posicion=37>F</td>
+        <td data-posicion=38>Gb</td>
+        <td data-posicion=39>G</td>
+      </tr>
 
-            </p>
-            
-            <table>
-                <tr>
-                    <td data-posicion=40>Ab</td>
-                    <td data-posicion=41>A</td>
-                    <td data-posicion=42>Bb</td>
-                    <td data-posicion=43>B</td>
-                </tr>
-                <tr>
-                    <td data-posicion=36>E</td>
-                    <td data-posicion=37>F</td>
-                    <td data-posicion=38>Gb</td>
-                    <td data-posicion=39>G</td>
-                </tr>
+      <tr>
+        <td data-posicion=32>C</td>
+        <td data-posicion=33>Db</td>
+        <td data-posicion=34>D</td>
+        <td data-posicion=35>Eb</td>
+      </tr>
+      <tr>
+        <td data-posicion=28>Ab</td>
+        <td data-posicion=29>A</td>
+        <td data-posicion=30>Bb</td>
+        <td data-posicion=31>B</td>
+      </tr>
+      <tr>
+        <td data-posicion=24>E</td>
+        <td data-posicion=25>F</td>
+        <td data-posicion=26>Gb</td>
+        <td data-posicion=27>G</td>
+      </tr>
 
+      <tr>
+        <td data-posicion=20>C</td>
+        <td data-posicion=21>Db</td>
+        <td data-posicion=22>D</td>
+        <td data-posicion=23>Eb</td>
+      </tr>
+      <tr>
+        <td data-posicion=16>Ab</td>
+        <td data-posicion=17>A</td>
+        <td data-posicion=18>Bb</td>
+        <td data-posicion=19>B</td>
+      </tr>
+      <tr>
+        <td data-posicion=12>E</td>
+        <td data-posicion=13>F</td>
+        <td data-posicion=14>Gb</td>
+        <td data-posicion=15>G</td>
+      </tr>
 
-                <tr>
-                    <td data-posicion=32>C</td>
-                    <td data-posicion=33>Db</td>
-                    <td data-posicion=34>D</td>
-                    <td data-posicion=35>Eb</td>
-                </tr>
-                <tr>
-                    <td data-posicion=28>Ab</td>
-                    <td data-posicion=29>A</td>
-                    <td data-posicion=30>Bb</td>
-                    <td data-posicion=31>B</td>
-                </tr>
-                <tr>
-                    <td data-posicion=24>E</td>
-                    <td data-posicion=25>F</td>
-                    <td data-posicion=26>Gb</td>
-                    <td data-posicion=27>G</td>
-                </tr>
+      <tr>
+            <td data-posicion=8>C</td>
+            <td data-posicion=9>Db</td>
+            <td data-posicion=10>D</td>
+            <td data-posicion=11>Eb</td>
+      </tr>
+      <tr>
+            <td data-posicion=4>Ab</td>
+            <td data-posicion=5>A</td>
+            <td data-posicion=6>Bb</td>
+            <td data-posicion=7>B</td>
+      </tr>
+      <tr>
+            <td data-posicion=0>E</td>
+            <td data-posicion=1>F</td>
+            <td data-posicion=2>Gb</td>
+            <td data-posicion=3>G</td>
+      </tr>
+    </table>
 
+  <!-- Musical pentagram -->
+    <div id="pentagram">
+      <p style="margin-bottom: -4.5%; z-index: -1;"> &nbsp; </p>
 
-                <tr>
-                    <td data-posicion=20>C</td>
-                    <td data-posicion=21>Db</td>
-                    <td data-posicion=22>D</td>
-                    <td data-posicion=23>Eb</td>
-                </tr>
-                <tr>
-                    <td data-posicion=16>Ab</td>
-                    <td data-posicion=17>A</td>
-                    <td data-posicion=18>Bb</td>
-                    <td data-posicion=19>B</td>
-                </tr>
-                <tr>
-                    <td data-posicion=12>E</td>
-                    <td data-posicion=13>F</td>
-                    <td data-posicion=14>Gb</td>
-                    <td data-posicion=15>G</td>
-                </tr>
+      <hr class="linea-imaginaria-pentagrama" style="visibility: hidden;">
+      <hr class="linea-imaginaria-pentagrama">
+      <hr class="linea-imaginaria-pentagrama">
+      <hr class="linea-imaginaria-pentagrama">
+      <hr class="linea-imaginaria-pentagrama">
+      <hr class="linea-imaginaria-pentagrama">
+      
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
 
+      <p class="spacing"> &nbsp; </p>
 
-                <tr>
-                    <td data-posicion=8>C</td>
-                    <td data-posicion=9>Db</td>
-                    <td data-posicion=10>D</td>
-                    <td data-posicion=11>Eb</td>
-                </tr>
-                <tr>
-                    <td data-posicion=4>Ab</td>
-                    <td data-posicion=5>A</td>
-                    <td data-posicion=6>Bb</td>
-                    <td data-posicion=7>B</td>
-                </tr>
-                <tr>
-                    <td data-posicion=0>E</td>
-                    <td data-posicion=1>F</td>
-                    <td data-posicion=2>Gb</td>
-                    <td data-posicion=3>G</td>
-                </tr>
-            </table>
-
-        <!-- Musical pentagram -->
-            <div id="pentagram">
-                <p style="margin-bottom: -4.5%; z-index: -1;"> &nbsp; </p>
-
-                <hr class="linea-imaginaria-pentagrama" style="visibility: hidden;">
-                <hr class="linea-imaginaria-pentagrama">
-                <hr class="linea-imaginaria-pentagrama">
-                <hr class="linea-imaginaria-pentagrama">
-                <hr class="linea-imaginaria-pentagrama">
-                <hr class="linea-imaginaria-pentagrama">
-                
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+      <hr class="linea-real-pentagrama">
+    </div>
+  </div>
+  <!--#endregion-->
         
-                <p class="spacing"> &nbsp; </p>
-        
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-                <hr class="linea-real-pentagrama">
-            </div>
+  <!--#region audios -->
+  <audio class="notes" preload="auto"><source src="notas/E3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/F3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Gb3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/G3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Ab3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/A3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Bb3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/B3.mp3"></source></audio>
 
-        </div>
+  <audio class="notes" preload="auto"><source src="notas/C4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Db4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/D4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Eb4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/E4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/F4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Gb4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/G4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Ab4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/A4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Bb4.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/B4.mp3"></source></audio>
 
-        <!--#endregion-->
-        
-        <!--#region audios -->
-        <audio class="notes" preload="auto"><source src="notas/E3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/F3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Gb3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/G3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Ab3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/A3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Bb3.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/B3.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/C5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Db5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/D5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Eb5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/E5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/F5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Gb5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/G5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Ab5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/A5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Bb5.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/B5.mp3"></source></audio>
 
-        <audio class="notes" preload="auto"><source src="notas/C4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Db4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/D4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Eb4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/E4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/F4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Gb4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/G4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Ab4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/A4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Bb4.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/B4.mp3"></source></audio>
-
-        <audio class="notes" preload="auto"><source src="notas/C5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Db5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/D5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Eb5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/E5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/F5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Gb5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/G5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Ab5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/A5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Bb5.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/B5.mp3"></source></audio>
-
-        <audio class="notes" preload="auto"><source src="notas/C6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Db6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/D6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Eb6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/E6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/F6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Gb6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/G6.mp3"></source></audio> 
-        <audio class="notes" preload="auto"><source src="notas/Ab6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/A6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/Bb6.mp3"></source></audio>
-        <audio class="notes" preload="auto"><source src="notas/B6.mp3"></source></audio>
-        <!--#endregion-->
-    
-    <script>
-    
-    //// Working notes positions when there was no scrollable pentagram functionality
-    //
-    //   const chromaticKeyValues = {
-    //                              "|": [0, "72.8%", "natural-note"],
-    //                              Tab: [1, "70.2%", "natural-note"],
-    //                              CapsLock: [2, "67.73%", "flat-note"],
-    //                              "<": [3, "67.73%", "natural-note"],
-    //                              1: [4, "65%", "flat-note"],
-    //                              q: [5, "65%", "natural-note"],
-    //                              a: [6, "63.2%", "flat-note"],
-    //                              z: [7, "63.2%", "natural-note"],
-    //                              2: [8, "60%", "natural-note"],
-    //                              w: [9, "57.4%", "flat-note"],
-    //                              s: [10, "57.4%", "natural-note"],
-    //                              x: [11, "55.6%", "flat-note"],
-    //                              3: [12, "55.6%", "natural-note"],
-    //                              e: [13, "53%", "natural-note"],
-    //                              d: [14, "50.45%", "flat-note"],
-    //                              c: [15, "50.45%", "natural-note"],
-    //                              4: [16, "48%", "flat-note"],
-    //                              r: [17, "48%", "natural-note"],
-    //                              f: [18, "45.3%", "flat-note"],
-    //                              v: [19, "45.3%", "natural-note"],
-    //                              5: [20, "43%", "natural-note"],
-    //                              t: [21, "40.4%", "flat-note"],
-    //                              g: [22, "40.4%", "natural-note"],
-    //                              b: [23, "37.8%", "flat-note"],
-    //                              6: [24, "37.8%", "natural-note"],
-    //                              y: [25, "35.4%", "natural-note"],
-    //                              h: [26, "33%", "flat-note"],
-    //                              n: [27, "33%", "natural-note"],
-    //                              7: [28, "30.25%", "flat-note"],
-    //                              u: [29, "30.25%", "natural-note"],
-    //                              j: [30, "27.9%", "flat-note"],
-    //                              m: [31, "27.9%", "natural-note"],
-    //                              8: [32, "25.45%", "natural-note"],
-    //                              i: [33, "22.85%", "flat-note"],
-    //                              k: [34, "22.85%", "natural-note"],
-    //                              ",": [35, "20.25%", "flat-note"],
-    //                              9: [36, "20.25%", "natural-note"],
-    //                              o: [37, "17.8%", "natural-note"],
-    //                              l: [38, "15.3%", "flat-note"],
-    //                              ".": [39, "15.3%", "natural-note"],
-    //                              0: [40, "12.7%", "flat-note"],
-    //                              p: [41, "12.7%", "natural-note"],
-    //                              ñ: [42, "10.2%", "flat-note"],
-    //                              "-": [43, "10.2%", "natural-note"],
-    //   };
-    </script>
-    
-    </body>
+  <audio class="notes" preload="auto"><source src="notas/C6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Db6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/D6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Eb6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/E6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/F6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Gb6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/G6.mp3"></source></audio> 
+  <audio class="notes" preload="auto"><source src="notas/Ab6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/A6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/Bb6.mp3"></source></audio>
+  <audio class="notes" preload="auto"><source src="notas/B6.mp3"></source></audio>
+  <!--#endregion-->
+</body>
 </html>
