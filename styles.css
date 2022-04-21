@@ -1,12 +1,74 @@
-/* Attempting to emulate the Ableton Push 2 style */
+/*
+  Attempting to emulate the Ableton Push 2 style 
+*/
 
 body {
   margin: 0;
-  padding: 10px 5px 10px 60px;
+  padding: 20px;
   overflow-y: hidden;
   background-color: black;
 }
 
+/* Page components */
+section {
+  position: absolute;
+  top: 2.25vh;
+}
+article {
+  position: absolute;
+  right: 32vw;
+  top: 0;
+}
+aside {
+  top: 4vh;
+  right: 3.5vw;
+  position: absolute;
+}
+
+/* 
+  Section
+*/
+/* Message */
+#mensaje {
+  font-size: 25px;
+  color: white;
+  margin: 5vh 3.5vw 0 15px;
+}
+/* Link to Github repository */
+#mensaje a {
+  color: rgb(30, 30, 250);
+  font-size: 1.3rem;
+}
+
+/* Slider styling */
+div.slide-container {
+  color: white;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+/* Buttons for automatization functions */
+button:active {
+  color: white !important;
+  background-color: rgba(222, 0, 0, 0.75) !important;
+}
+.automatization {
+  width: 20vw;
+  height: 5vh;
+  border: none;
+  color: black;
+  margin-top: 3vh;
+  background-color: rgb(112, 201, 237);
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
+  border-radius: 20px;
+}
+
+/* 
+  Article
+*/
+/* Pseudo-guitar */
 table {
   width: 40vw;
   height: 95vh;
@@ -16,7 +78,6 @@ table {
   margin-top: 2vh;
   border-spacing: 8px;
 }
-
 td {
   color: black;
   padding: 2px;
@@ -24,65 +85,35 @@ td {
   background-color: rgb(119, 116, 116);
   background-image: radial-gradient(rgb(112, 201, 237) 20%,rgb(119, 116, 116));
 }
-
 .pressed {
   background-color: none;
 }
 
-/* Message */
-#mensaje {
-  font-size: 25px;
+
+/* 
+  Aside
+*/
+/* Progress bar */
+#progress-zone {
   color: white;
-  margin: 15vh 3.5vw 0 15px;
+  font-size: 1.25rem;
+  text-align: center;
 }
-/* Link to Github repository */
-#mensaje a {
-  color: blue;
-  font-size: 1rem;
+#progress {
+  width: 20vw;
+}
+input[type="number"] {
+  width: 40px;
 }
 
-/* Slider styling */
-div.slide-container {
-  position: relative;
-  left: 0;
-  margin-top: 5vh;
-}
-#volume-control {
-  left: 2vw;
-  position: absolute;
-}
-.slide-container label {
-  left: 5vw;
-  color: white;
-  margin-top: 1vh;
-  position: absolute;
-}
-
-/* Buttons for automatization functions */
-button:active {
-  color: white;
-  background-color: rgba(222, 0, 0, 0.75);
-}
-.automatization {
-  width: 200px;
-  height: 7%;
-  border: none;
-  color: black;
-  margin-top: 3vh;
-  background-color: rgb(112, 201, 237);
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.25));
-  border-radius: 20px;
-}
 
 /* Musical pentagram */
 #pentagram {
-  float: right;
+  top: 2vh;
   width: 25vw;
-  margin: 12vh 0 0 3vw;
   position: relative;
   overflow-x: scroll;
 }
-
 .linea-real-pentagrama {
   border: .3vh solid white;
   border-bottom: none;

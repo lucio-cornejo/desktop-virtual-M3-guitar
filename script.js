@@ -135,7 +135,6 @@ document.body.addEventListener(
         
         potentialNewLines.forEach( (linea) => {
           linea.style.width =  currentPentagramWidth + 'px';
-          //   linea.style.width = String(lineas[0].getBoundingClientRect().width + 28)+'px';
         })
       }
     }
@@ -212,7 +211,17 @@ function getTimesAndNotes() {
   console.log(JSON.stringify(notesPlayed));
 };
 
+let stopPlayRecordingFunction = false;
+function stopRecording () {
+  stopPlayRecordingFunction = true;
+}
+
 async function playRecording() {
+  // Reset stop of function (fixes bug
+  // where playRecording needed to be
+  // called twice in order to activate)
+  stopPlayRecordingFunction = false;
+  
   // Get times between notes
   let jsTeclas = teclas;
   let jsTimes = tiempos;
@@ -221,16 +230,33 @@ async function playRecording() {
   // Add arbitrary final end time to last note played
   jsTimes.push(1500);
   console.log(jsTimes);
+
+  // Get time scaling factor picked by user
+  let playbackSpeed = document.querySelector("#playback-speed").value;
   
   // Start note playing simulation
-  for (let i=0; i<jsTeclas.length; i++) {
-    document.body.dispatchEvent(
-      new KeyboardEvent('keydown', {'key':jsTeclas[i]} )
-    )
-    await sleep(jsTimes[i]);
-    document.body.dispatchEvent(
-      new KeyboardEvent('keyup', {'key':jsTeclas[i]} )
-    )
+  let i = Math.round((jsTeclas.length - 1) * parseInt(progress.value) * 0.01);
+
+  for (i; i < jsTeclas.length; i++) {
+    if (stopPlayRecordingFunction === true) {
+      stopPlayRecordingFunction = false;
+      return ;
+    } else {
+      document.body.dispatchEvent(
+        new KeyboardEvent('keydown', {'key':jsTeclas[i]} )
+        )
+      let percentagePlayed = 
+      Math.round((i+1) * 100 / jsTeclas.length);
+      progress.value = percentagePlayed;
+      progress.nextElementSibling.innerText =
+      String(percentagePlayed) + '%';
+
+      await sleep(jsTimes[i] / playbackSpeed);
+
+      document.body.dispatchEvent(
+        new KeyboardEvent('keyup', {'key':jsTeclas[i]} )
+      )
+    }
   }
 }
 
