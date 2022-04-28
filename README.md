@@ -16,12 +16,12 @@ in their respective form and position inside a music sheet.
 ## Features
 
 <dl>
-  <dt>***Restart recording***</dt>
+  <dt>**Restart recording**</dt>
   <dd>
     Upon press, starts recording you next keyboard inputs
     and the time between them.
   </dd>
-  <dt>***Get times and notes***</dt>
+  <dt>**Get times and notes**</dt>
   <dd>
     Stops the recording activated with the previous button.
     In the browser's console, the following information 
@@ -32,7 +32,7 @@ in their respective form and position inside a music sheet.
     - Position (in the guitar layout) of the notes played, in order, during recording.
     - Pitch classes, in order, of the notes played during recording.
   </dd>
-  <dt>***Play recording***</dt>
+  <dt>**Play recording**</dt>
   <dd>
     Starts simulating the user's recorded keypresses, at their respective times,
     starting from the percentage chosen in the right side of the page.
@@ -40,13 +40,13 @@ in their respective form and position inside a music sheet.
     as a fast arpeggio for them to be detected as an actual chord, by 
     simulating the recording playing in a non-mechanical keyboard.
   </dd>
-  <dt>***Pause recording***</dt>
+  <dt>**Pause recording**</dt>
   <dd>
     Pause recording.
     Useful for learning a song via its recoding saved in this app:
     _Pause, see notes played, and try to play them yourself._
   </dd>
-  <dt>***Clear pentagram***</dt>
+  <dt>**Clear pentagram**</dt>
   <dd>
     Delete the notes shown in the music sheet to the right.
     Useful when too many notes have been added and the page starts lagging.
