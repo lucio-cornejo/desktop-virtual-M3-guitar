@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link href = "styles.css" rel="stylesheet">
   <script src="script.js" defer></script>
 </head>
@@ -22,7 +23,7 @@
         Github repo for local use of app.
       </a>
       <br>
-      Desktop only intended site.
+      <span id="desktop-alert">Desktop-only intended site.</span>
       <br><br>
       To play notes,
       use the keys 
@@ -119,44 +120,60 @@
     </table>
   </article>              
 
+  <!-- Progress bar -->
+  <div id="progress-zone">
+    <label for="progress">Recording's percentage played</label> 
+    <br>
+    <input  type="range" id="progress" list = "tickmarks"
+            min="0" max="99" value="0" step = "1"
+            oninput="this.nextElementSibling.innerText = this.value + '%'"
+    >
+    </input>
+    <span>0%</span>
+  </div>
+  
   <aside>
-    <!-- Progress bar -->
-    <div id="progress-zone">
-      <label for="progress">Recording's percentage played</label> 
-      <br>
-      <input  type="range" id="progress" list = "tickmarks"
-              min="0" max="99" value="0" step = "1"
-              oninput="this.nextElementSibling.innerText = this.value + '%'"
-      >
-      </input>
-      <span>0%</span>
-    </div>
-    <br><br>
-
     <!-- Musical pentagram -->
     <div id="pentagram">
-      <p style="margin-bottom: -8.5vh; z-index: -1;"> &nbsp; </p>
+      <div id="rows">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        <hr class="linea-imaginaria-pentagrama">
+        
+        <hr class="linea-invisible-pentagrama">
+        <hr class="linea-invisible-pentagrama">
+        <hr class="linea-invisible-pentagrama">
+        
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        
+        <hr class="linea-invisible-pentagrama">
+        <hr class="linea-invisible-pentagrama">
+        <hr class="linea-invisible-pentagrama">
 
-      <hr class="linea-imaginaria-pentagrama" style="visibility: hidden;">
-      <hr class="linea-imaginaria-pentagrama">
-      <hr class="linea-imaginaria-pentagrama">
-      <hr class="linea-imaginaria-pentagrama">
-      <hr class="linea-imaginaria-pentagrama">
-      <hr class="linea-imaginaria-pentagrama">
-      
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-
-      <p class="spacing"> &nbsp; </p>
-
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
-      <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+        <hr class="linea-real-pentagrama">
+      </div>
     </div>
   </aside>
 

@@ -4,50 +4,50 @@ let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
 const audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
 
 const chromaticKeyValues = {
-  "|": [0, "73.75%", "natural-note"],        // E
-  "Tab": [1, "71%", "natural-note"],
-  "CapsLock": [2, "68.5%", "flat-note"],
-  "<": [3, "68.5%", "natural-note"],
-  "1": [4, "65.75%", "flat-note"],
-  "q": [5, "65.75%", "natural-note"],
-  "a": [6, "64%", "flat-note"],
-  "z": [7, "64%", "natural-note"],          // B
-  "2": [8, "61%", "natural-note"],            // C
-  "w": [9, "58%", "flat-note"],
-  "s": [10, "58%", "natural-note"],
-  "x": [11, "55.6%", "flat-note"],
-  "3": [12, "55.6%", "natural-note"],
-  "e": [13, "53.4%", "natural-note"],
-  "d": [14, "50.45%", "flat-note"],
-  "c": [15, "50.45%", "natural-note"],       // G4
-  "4": [16, "48%", "flat-note"],
-  "r": [17, "48%", "natural-note"],
-  "f": [18, "45.3%", "flat-note"],
-  "v": [19, "45.3%", "natural-note"],         // B
-  "5": [20, "43%", "natural-note"],           // C  
-  "t": [21, "40.4%", "flat-note"],
-  "g": [22, "40.4%", "natural-note"],
-  "b": [23, "37.8%", "flat-note"],
-  "6": [24, "37.8%", "natural-note"],
-  "y": [25, "35%", "natural-note"],
-  "h": [26, "32.5%", "flat-note"],
-  "n": [27, "32.5%", "natural-note"],
-  "7": [28, "29.75%", "flat-note"],
-  "u": [29, "29.75%", "natural-note"],
-  "j": [30, "27.5%", "flat-note"],
-  "m": [31, "27.5%", "natural-note"],          // B
-  "8": [32, "24.5%", "natural-note"],         // C
-  "i": [33, "22.25%", "flat-note"],
-  "k": [34, "22.25%", "natural-note"],
-  ",": [35, "19.25%", "flat-note"],
-  "9": [36, "19.25%", "natural-note"],
-  "o": [37, "16.75%", "natural-note"],
-  "l": [38, "14%", "flat-note"],
-  ".": [39, "14%", "natural-note"],
-  "0": [40, "11.75%", "flat-note"],
-  "p": [41, "11.75%", "natural-note"],
-  "ñ": [42, "8.75%", "flat-note"],
-  "-": [43, "8.75%", "natural-note"],
+  "|": [0, 27, "natural-note"],        // E
+  "Tab": [1, 26, "natural-note"],
+  "CapsLock": [2, 25 , "flat-note"],
+  "<": [3, 25 , "natural-note"],
+  "1": [4, 24 , "flat-note"],
+  "q": [5, 24 , "natural-note"],
+  "a": [6, 23 , "flat-note"],
+  "z": [7, 23 , "natural-note"],          // B
+  "2": [8, 22 , "natural-note"],            // C
+  "w": [9, 21 , "flat-note"],
+  "s": [10, 21 , "natural-note"],
+  "x": [11, 20 , "flat-note"],
+  "3": [12, 20 , "natural-note"],
+  "e": [13, 19 , "natural-note"],
+  "d": [14, 18 , "flat-note"],
+  "c": [15, 18 , "natural-note"],       // G4
+  "4": [16, 17 , "flat-note"],
+  "r": [17, 17 , "natural-note"],
+  "f": [18, 16 , "flat-note"],
+  "v": [19, 16 , "natural-note"],         // B
+  "5": [20, 15 , "natural-note"],           // C  
+  "t": [21, 14 , "flat-note"],
+  "g": [22, 14 , "natural-note"],
+  "b": [23, 13 , "flat-note"],
+  "6": [24, 13 , "natural-note"],
+  "y": [25, 12 , "natural-note"],
+  "h": [26, 11 , "flat-note"],
+  "n": [27, 11 , "natural-note"],
+  "7": [28, 10 , "flat-note"],
+  "u": [29, 10 , "natural-note"],
+  "j": [30, 9 , "flat-note"],
+  "m": [31, 9 , "natural-note"],          // B
+  "8": [32, 8 , "natural-note"],         // C
+  "i": [33, 7 , "flat-note"],
+  "k": [34, 7 , "natural-note"],
+  ",": [35, 6 , "flat-note"],
+  "9": [36, 6 , "natural-note"],
+  "o": [37, 5 , "natural-note"],
+  "l": [38, 4 , "flat-note"],
+  ".": [39, 4 , "natural-note"],
+  "0": [40, 3 , "flat-note"],
+  "p": [41, 3 , "natural-note"],
+  "ñ": [42, 2 , "flat-note"],
+  "-": [43, 2 , "natural-note"],
 };
 
 const keyValues = Object.keys(chromaticKeyValues);
@@ -124,7 +124,11 @@ document.body.addEventListener(
         
         let nota = document.createElement("div");
         nota.className = chromaticKeyValues[tempo][2];
-        nota.style.top = chromaticKeyValues[tempo][1];
+        nota.style.top = 
+          String(
+            document.querySelector("#rows")
+            .children[chromaticKeyValues[tempo][1]].offsetTop - 7
+          ) + "px";
         // Set horizontal distance between consecutive (non simultaneous) notes
         nota.style.left = String(12 * noteShiftCounter) + "%"; 
 
@@ -132,12 +136,11 @@ document.body.addEventListener(
         pentagrama.firstChild.scrollIntoView();
         
         // Increase length of pentragram lines due to overflow
-        let currentPentagramWidth = String(pentagrama.scrollWidth);
+        let currentPentagramWidth = String(pentagrama.parentNode.scrollWidth);
         let potentialNewLines = 
-        Array.prototype.slice.call(document.querySelectorAll('hr[class*="linea"]'));
-        // Remove hidden line
-        potentialNewLines.shift();
-        
+          Array.prototype.slice.call(
+            document.querySelectorAll('hr[class*="linea"]')
+          )
         potentialNewLines.forEach( (linea) => {
           linea.style.width =  currentPentagramWidth + 'px';
         })

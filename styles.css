@@ -1,11 +1,17 @@
-/*
-  Attempting to emulate the Ableton Push 2 style 
-*/
-
 /* Import some Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Comforter&family=Dancing+Script&family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap');
 
+/* 
+  Variables
+*/  
+:root {
+  --sheetSpacing: 2vh;
+}  
+
+/*
+Attempting to emulate the Ableton Push 2 style 
+*/  
 body {
   margin: 0;
   padding: 20px;
@@ -30,6 +36,7 @@ aside {
   right: 2.5vw;
   position: absolute;
   background-color: white;
+  overflow-x: auto;
 }
 
 /* 
@@ -46,6 +53,8 @@ aside {
   color: rgb(30, 30, 250);
   font-size: 1.3rem;
 }
+/* Desktop use-only alert */
+#desktop-alert { color: red; }
 
 /* Slider styling */
 div.slide-container {
@@ -117,6 +126,10 @@ td {
 */
 /* Progress bar */
 #progress-zone {
+  position : absolute;
+  top: 5vh;
+  right: 5vw;
+  z-index: 3;
   color: black;
   font-size: 1.25rem;
   text-align: center;
@@ -127,49 +140,60 @@ td {
 
 /* Musical pentagram */
 #pentagram {
-  top: 2vh;
+  margin-top: 10vh;
   width: 25vw;
-  position: relative;
-  overflow-x: scroll;
 }
-.linea-real-pentagrama {
-  border: .3vh solid black;
-  border-bottom: none;
-  margin-bottom: 4vh;
+#rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sheetSpacing);
   z-index: -1;
+
+}
+hr {
+  /* Fix that line does not get collapsed to a point */
+  margin: 0;
+  align-self: stretch;
+}
+.linea-invisible-pentagrama {
+  visibility: hidden;
 }
 .linea-imaginaria-pentagrama {
+  z-index: 1;
   border: .3vh dashed rgba(255,0,0,1);
   border-bottom: none;
-  margin-bottom: 4vh;
-  z-index: -1;
 }
-.spacing {
-  margin-bottom: 1%;
-  z-index: -1;
+.linea-imaginaria-pentagrama:nth-child(2n) {
+  visibility: hidden;
+}
+.linea-real-pentagrama {
+  z-index: 1;
+  border: .3vh solid black;
+  border-bottom: none;
+}
+.linea-real-pentagrama:nth-child(2n) {
+  visibility: hidden;
 }
 
 /* Symbols for notes in sheet */
 .natural-note {
   width: 2vh;
   height: 2vh;
-  z-index: 1;
+  z-index: 2;
   left: 5%;
   top: 10.2%;
   position: absolute;
   border-radius: 100%;
-  /* background-color: rgb(112, 201, 237); */
   background-color: black;
 }
 .flat-note {
   width: 2vh;
   height: 2vh;
-  z-index: 1;
+  z-index: 2;
   left: 5%;
   top: -20%; /* hide note */
   position: absolute;
   border-radius: 100%;
-  /* background-color: rgb(112, 201, 237); */
   background-color: black;
 }
 .flat-note::before {
@@ -178,6 +202,5 @@ td {
   margin-left: -13px;
   position: absolute;
   margin-top: -15px;
-  /* color: rgb(112, 201, 237); */
   color: black;
 }
