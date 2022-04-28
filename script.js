@@ -219,9 +219,9 @@ function getTimesAndNotes() {
   console.log(JSON.stringify(notesPlayed));
 };
 
-let stopPlayRecordingFunction = false;
-function stopRecording () {
-  stopPlayRecordingFunction = true;
+let pausePlayRecordingFunction = false;
+function pauseRecording () {
+  pausePlayRecordingFunction = true;
 }
 
 let chordsPseudoCounter = 0;
@@ -229,7 +229,7 @@ async function playRecording() {
   // Reset stop of function (fixes bug
   // where playRecording needed to be
   // called twice in order to activate)
-  stopPlayRecordingFunction = false;
+  pausePlayRecordingFunction = false;
   
   // Get times between notes
   let jsTeclas = teclas;
@@ -247,8 +247,8 @@ async function playRecording() {
   let i = Math.round((jsTeclas.length - 1) * parseInt(progress.value) * 0.01);
 
   for (i; i < jsTeclas.length; i++) {
-    if (stopPlayRecordingFunction === true) {
-      stopPlayRecordingFunction = false;
+    if (pausePlayRecordingFunction === true) {
+      pausePlayRecordingFunction = false;
       return ;
     } else {
       // Play note
@@ -269,8 +269,8 @@ async function playRecording() {
       if (jsTimes[i] < keypressMarginOfError) {
         chordsPseudoCounter += 1;
       } else {
-        if (stopPlayRecordingFunction === true) {
-          stopPlayRecordingFunction = false;
+        if (pausePlayRecordingFunction === true) {
+          pausePlayRecordingFunction = false;
           return ;
         } else {
           range(i - chordsPseudoCounter, i).forEach(position => {
@@ -311,7 +311,7 @@ document.addEventListener(
       playRecording();
     }
     if (event.key === " ") {
-      stopRecording();
+      pauseRecording();
     }
     if (event.key === "Shift") {
       progress.focus();
