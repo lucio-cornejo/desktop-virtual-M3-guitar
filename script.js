@@ -3,6 +3,15 @@ const tabla = document.querySelector("table");
 let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
 const audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
 
+// Get distance CSS variable betwween consecutive musich sheet lines,
+// but, turn its vh unit to px
+const musicSheetPixelSpacing = 
+  parseInt(
+    window.getComputedStyle(document.body)
+      .getPropertyValue('--sheetSpacing').at(1)
+  ) * (document.body.clientHeight / 100)
+  
+
 const chromaticKeyValues = {
   "|": [0, 27, "natural-note"],        // E
   "Tab": [1, 26, "natural-note"],
@@ -127,7 +136,8 @@ document.body.addEventListener(
         nota.style.top = 
           String(
             document.querySelector("#rows")
-            .children[chromaticKeyValues[tempo][1]].offsetTop - 7
+              .children[chromaticKeyValues[tempo][1]].offsetTop 
+              - musicSheetPixelSpacing * 7
           ) + "px";
         // Set horizontal distance between consecutive (non simultaneous) notes
         nota.style.left = String(12 * noteShiftCounter) + "%"; 
