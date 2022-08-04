@@ -1,7 +1,7 @@
 let audio;
 const tabla = document.querySelector("table");
-let notes = Array.prototype.slice.call(document.querySelectorAll("td"));
-const audios = Array.prototype.slice.call(document.querySelectorAll("audio"));
+let notes = [...document.querySelectorAll("td")];
+const audios = [...document.querySelectorAll("audio")];
 
 // Get distance CSS variable betwween consecutive musich sheet lines,
 // but, turn its vh unit to px
@@ -64,7 +64,7 @@ const keyValues = Object.keys(chromaticKeyValues);
 let pressed = Array(keyValues.length).fill(0);
 
 const pentagrama = document.querySelector("#pentagram");
-let backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
+let backupPentagram = [...pentagrama.cloneNode(true).children];
 let noteShiftCounter = 0;
 
 // Sort notes based on their posicion property
@@ -82,12 +82,12 @@ audios.forEach((e) => (e.volume = 0.5));
 
 // Function to reset the musical pentagram
 function resetPentagram() {
-  Array.prototype.slice.call(pentagrama.children).forEach((e) => e.remove());
+  [...pentagrama.children].forEach((e) => e.remove());
   pentagrama.style.width = "25vw";
   backupPentagram.forEach((e) => pentagrama.appendChild(e));
   noteShiftCounter = 0;
   // Reset copy
-  backupPentagram = Array.prototype.slice.call(pentagrama.cloneNode(true).children);
+  backupPentagram = [...pentagrama.cloneNode(true).children];
 }
 
 // Timing of notes pressed
@@ -147,10 +147,7 @@ document.body.addEventListener(
         
         // Increase length of pentragram lines due to overflow
         let currentPentagramWidth = String(pentagrama.parentNode.scrollWidth);
-        let potentialNewLines = 
-          Array.prototype.slice.call(
-            document.querySelectorAll('hr[class*="linea"]')
-          )
+        let potentialNewLines = [...document.querySelectorAll('hr[class*="linea"]')];
         potentialNewLines.forEach( (linea) => {
           linea.style.width =  currentPentagramWidth + 'px';
         })

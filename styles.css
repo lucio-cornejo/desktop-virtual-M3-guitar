@@ -42,6 +42,7 @@ aside {
 /* 
   Section
 */
+
 /* Message */
 #mensaje {
   font-size: 25px;
@@ -99,6 +100,7 @@ button:active {
 /* 
   Article
 */
+
 /* Pseudo-guitar */
 table {
   width: 40vw;
@@ -124,6 +126,7 @@ td {
 /* 
   Aside
 */
+
 /* Progress bar */
 #progress-zone {
   position : absolute;
